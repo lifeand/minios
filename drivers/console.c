@@ -1,4 +1,6 @@
 #include "console.h"
+#include "common.h"
+
 // VGA 的显示缓冲区的起点是 0xB8000 
 static uint16_t *video_memory = (uint16_t*)0xB8000; 
 
@@ -10,7 +12,6 @@ static void move_cursor()
 {
     // 屏幕80 字节宽
     uint16_t cursorLocation = cursor_y * 80 + cursor_x;
-
 
     outb(0x3D4, 14); // 告诉VGA 设置光标高字节
     outb(0x3D4, cursorLocation >> 8); // 发送高 8 位 
@@ -39,7 +40,7 @@ static void scroll()
     uint16_t blank = 0x20 | (attribute_byte << 8); // space 是 0x20 
 
     // cursor_y 到 25 的时候，换行
-    if (cursor_y >=- 25) {
+    if (cursor_y >= 25) {
 	int i; 
 
 	for (i=0 *80; i < 24 * 80; i++) {
