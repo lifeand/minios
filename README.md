@@ -1,10 +1,45 @@
-# miniOS
+## miniOS
 
 记录一下自己写微型内核的过程
 
 Sun Jan 28 18:42:43 CST 2018 
+### gcc 内联汇编
+```
+   asm ( assembler template
+	        
+	   : output operands               (optional)
+	        
+	   : input operands                (optional)
+	        
+	   : list of clobbered registers   
+	       (optional)
+	            
+       );
+```
+如
+```
+{
+int a=10, b;
+asm ("movl %1, %%eax;
+		         
+movl %%eax, %0;"
+:"=r"(b)  /* output */    
+:"r"(a)       /* input */
+:"%eax"); /* clobbered register */
+}
+```
+常见约束
+寄存器约束 r 
+a %eax
+b %ebx
+c %ecx
+d %edx
+S %esi
+D %edi
+内存操作数约束 m 
+匹配（数字) 约束 
 
-# Multiboot
+### Multiboot
 ```
 uint32_t magic
 uint32_t flags
@@ -114,6 +149,6 @@ http://article.yeeyan.org/view/197439/167363
 
 http://wiki.ubuntu.com.cn/%E8%B7%9F%E6%88%91%E4%B8%80%E8%B5%B7%E5%86%99Makefile:%E4%B9%A6%E5%86%99%E8%A7%84%E5%88%99#.E4.BC.AA.E7.9B.AE.E6.A0.87
 
-
+https://www.ibm.com/developerworks/cn/linux/sdk/assemble/inline/
 
 
